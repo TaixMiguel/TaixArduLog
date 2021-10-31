@@ -12,8 +12,10 @@ class TaixArduLog {
   typedef void (*FunctionCallbackLog) (const String msg, const String raw);
 
   public:
-    TaixArduLog(bool devMode, int levelLog);
-    TaixArduLog(bool devMode, int levelLog, FunctionCallbackLog fCallbackLog);
+    TaixArduLog();
+    void begin(bool devMode, int levelLog);
+    void setCallback(FunctionCallbackLog fCallbackLog);
+
     void log(const char* level, const char* text);
 
   private:
