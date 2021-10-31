@@ -2,16 +2,16 @@
 
 void callbackDefault(String msg, String raw) {}
 
-TaixArduLog::TaixArduLog(bool devMode, int levelLog) {
+TaixArduLog::TaixArduLog() {}
+
+void TaixArduLog::begin(bool devMode, int levelLog) {
   _fCallbackLog = callbackDefault;
   _levelLog = levelLog;
   _devMode = devMode;
 }
 
-TaixArduLog::TaixArduLog(bool devMode, int levelLog, FunctionCallbackLog fCallbackLog) {
+void TaixArduLog::setCallback(FunctionCallbackLog fCallbackLog) {
   _fCallbackLog = fCallbackLog;
-  _levelLog = levelLog;
-  _devMode = devMode;
 }
 
 int getLevelNumber(const char* level) {
