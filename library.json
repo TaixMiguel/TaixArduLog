@@ -1,0 +1,24 @@
+{
+    "name": "TaixArduLog",
+    "version": "0.1.0",
+    "description": "Una librería para escribir logs en Arduino",
+    "keywords": "TaixMiguel, Log, Logger",
+    "repository":
+    {
+      "type": "git",
+      "url": "https://github.com/TaixMiguel/TaixArduLog.git"
+    },
+    "authors": [
+      {
+        "name": "TaixMiguel",
+        "url": "https://github.com/TaixMiguel",
+        "maintainer": true
+      }
+    ],
+    "license": "GNU General Public License v3.0",
+    "frameworks": "arduino",
+    "platforms": [
+      "esp32",
+      "espressif32"
+    ]
+  }
