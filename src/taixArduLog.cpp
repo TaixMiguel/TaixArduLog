@@ -5,13 +5,13 @@ void callbackDefault(String msg, String raw) {}
 TaixArduLog::TaixArduLog() {}
 
 void TaixArduLog::begin(bool devMode, int levelLog) {
-  _fCallbackLog = callbackDefault;
-  _levelLog = levelLog;
-  _devMode = devMode;
+  this->fCallbackLog = callbackDefault;
+  this->levelLog = levelLog;
+  this->devMode = devMode;
 }
 
 void TaixArduLog::setCallback(FunctionCallbackLog fCallbackLog) {
-  _fCallbackLog = fCallbackLog;
+  this->fCallbackLog = fCallbackLog;
 }
 
 int getLevelNumber(const char* level) {
@@ -36,10 +36,10 @@ String getTimeLog() {
 }
 
 void TaixArduLog::log(const char* level, const char* text) {
-  if (_devMode) {
+  if (devMode) {
       String msg = "[" + getTimeLog() + "][" + String(level) + "] " + text;
-      if (_levelLog > 0 && getLevelNumber(level) >= _levelLog)
-          _fCallbackLog(msg, text);
+      if (levelLog > 0 && getLevelNumber(level) >= levelLog)
+          fCallbackLog(msg, text);
       Serial.println("--> " + msg);
   }
 }

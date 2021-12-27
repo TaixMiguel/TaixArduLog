@@ -19,9 +19,9 @@ class TaixArduLog {
     void log(const char* level, const char* text);
 
   private:
-    bool _devMode;
-    int _levelLog;
-    FunctionCallbackLog _fCallbackLog;
+    bool devMode;
+    int levelLog;
+    FunctionCallbackLog fCallbackLog;
 };
 
 #endif
