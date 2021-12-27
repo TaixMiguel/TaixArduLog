@@ -15,11 +15,12 @@ void TaixArduLog::setCallback(FunctionCallbackLog fCallbackLog) {
 }
 
 int getLevelNumber(const char* level) {
-    if ("INFO" == level) return 1;
-    if ("CONF" == level) return 2;
-    if ("NOTICE" == level) return 3;
-    if ("WARN" == level) return 4;
+    if ("DEBUG" == level) return 1;
+    if ("INFO" == level)  return 2;
+    if ("CONF" == level)  return 3;
+    if ("WARN" == level)  return 4;
     if ("ERROR" == level) return 5;
+    if ("FATAL" == level) return 6;
     return 0;
 }
 
