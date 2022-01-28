@@ -1,18 +1,29 @@
 #include "taixArduLog.hpp"
 
-String _app, _device;
-const char* _serverName;
 bool freeConnection = true;
+String _serverName, _app, _device;
+
 TaixArduLog::TaixArduLog() {}
 
-void TaixArduLog::init(char* serverName, String app, String device) {
+void TaixArduLog::init(String serverName, char* app, String device) {
   esp_log_set_vprintf(taixLogger);
   _serverName = serverName;
+  _app = String(app);
   _device = device;
-  _app = app;
 }
 
 void TaixArduLog::setLevelLog(char* tag, esp_log_level_t levelLog) {
+  esp_log_level_set(tag, levelLog);
+}
+
+void TaixArduLog::setLevelLog(char* tag, int level) {
+  esp_log_level_t levelLog;
+  if (level==1) levelLog=ESP_LOG_ERROR;
+  else if (level==2) levelLog=ESP_LOG_WARN;
+  else if (level==3) levelLog=ESP_LOG_INFO;
+  else if (level==4) levelLog=ESP_LOG_DEBUG;
+  else if (level==5) levelLog=ESP_LOG_VERBOSE;
+  else levelLog=ESP_LOG_NONE;
   esp_log_level_set(tag, levelLog);
 }
 
