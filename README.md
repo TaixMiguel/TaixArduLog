@@ -20,8 +20,8 @@ En función del nivel con que se instancia la clase `TaixArduLog`, se verán los
 Se puede instanciar la clase de la siguiente forma:
 
 ``` C++
-TaixArduLog taixLog();
-taixLog.begin(true, 2);
+TaixArduLog taixLog;
+taixLog.begin(2);
 ```
 
 O creando nuestra propia función callback:
@@ -35,8 +35,8 @@ void callbackTest(String msg, String raw) {
   Serial.println(raw);
 }
 
-TaixArduLog taixLog();
-taixLog.begin(true, 2);
+TaixArduLog taixLog;
+taixLog.begin(2);
 taixLog.setCallback(callbackTest);
 ```
 
@@ -58,8 +58,8 @@ void callbackTest(String msg, String raw) {
   Serial.println(raw);
 }
 
-TaixArduLog taixLog();
-taixLog.begin(true, 2);
+TaixArduLog taixLog;
+taixLog.begin(2);
 taixLog.setCallback(callbackTest);
 
 taixLog.log("INFO", "Este es un mensaje de prueba");

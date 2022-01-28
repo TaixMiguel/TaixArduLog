@@ -2,7 +2,9 @@
 #define taixArduLog_hpp
 
 #include "Arduino.h"
+#include <HTTPClient.h>
 #include "time.h"
+#include <WiFi.h>
 
 /**
  * @author TaixMiguel
@@ -13,13 +15,13 @@ class TaixArduLog {
 
   public:
     TaixArduLog();
-    void begin(bool devMode, int levelLog);
+    void begin(int levelLog);
+    void begin(int levelLog, String serverName, char* app, String device);
     void setCallback(FunctionCallbackLog fCallbackLog);
 
     void log(const char* level, const char* text);
 
   private:
-    bool devMode;
     int levelLog;
     FunctionCallbackLog fCallbackLog;
 };
