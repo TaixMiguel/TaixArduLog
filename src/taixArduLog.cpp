@@ -4,7 +4,7 @@ void callbackDefault(String msg, String raw) {}
 
 String _serverName, _app, _device;
 void callbackServer(String msg, String raw) {
-  if (WiFi.status() == WL_CONNECTED) {
+  if (WiFi.status() == WL_CONNECTED && !_serverName.isEmpty()) {
     WiFiClient client;
     HTTPClient http;
 
