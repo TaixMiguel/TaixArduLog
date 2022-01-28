@@ -1,27 +1,19 @@
 #include "taixArduLog.hpp"
 
-void callbackDefault(String msg, String raw) {}
-
+String _app, _device;
+const char* _serverName;
+bool freeConnection = true;
 TaixArduLog::TaixArduLog() {}
 
-void TaixArduLog::begin(bool devMode, int levelLog) {
-  this->fCallbackLog = callbackDefault;
-  this->levelLog = levelLog;
-  this->devMode = devMode;
+void TaixArduLog::init(char* serverName, String app, String device) {
+  esp_log_set_vprintf(taixLogger);
+  _serverName = serverName;
+  _device = device;
+  _app = app;
 }
 
-void TaixArduLog::setCallback(FunctionCallbackLog fCallbackLog) {
-  this->fCallbackLog = fCallbackLog;
-}
-
-int getLevelNumber(const char* level) {
-  if (!strcmp("DEBUG",  level)) return 1;
-  if (!strcmp("INFO",   level)) return 2;
-  if (!strcmp("CONF",   level)) return 3;
-  if (!strcmp("WARN",   level)) return 4;
-  if (!strcmp("ERROR",  level)) return 5;
-  if (!strcmp("FATAL",  level)) return 6;
-  return 0;
+void TaixArduLog::setLevelLog(char* tag, esp_log_level_t levelLog) {
+  esp_log_level_set(tag, levelLog);
 }
 
 String getTimeLog() {
@@ -35,11 +27,26 @@ String getTimeLog() {
   return buffer;
 }
 
-void TaixArduLog::log(const char* level, const char* text) {
-  if (devMode) {
-      String msg = "[" + getTimeLog() + "][" + String(level) + "] " + text;
-      if (levelLog > 0 && getLevelNumber(level) >= levelLog)
-          fCallbackLog(msg, text);
-      Serial.println("--> " + msg);
+int TaixArduLog::taixLogger(const char* format, va_list args) {
+  char bufferLog[1024];
+  int retorno = vsnprintf(bufferLog, sizeof(bufferLog), format, args);
+  String msg = "[" + getTimeLog() + "]" + bufferLog;
+
+  if (freeConnection) {
+    Serial.print("--> " + msg);
+    if (WiFi.status() == WL_CONNECTED) {
+      freeConnection = false;
+      WiFiClient client;
+      HTTPClient http;
+
+      http.begin(client, _serverName);
+      msg = msg.substring(0, msg.length()-1);
+      http.addHeader("Content-Type", "application/json");
+      http.POST("{\"app\":\""+_app+"\",\"device\":\""+_device+"\",\"msg\":\""+String(msg)+"\"}");
+      http.end();
+      freeConnection = true;
+    }
   }
+
+  return retorno;
 }
